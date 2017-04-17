@@ -12,7 +12,8 @@ transposeMat (x :: xs) = zipWith (::) x (transposeMat xs)
 ||| > addMatrix [[1,2], [3,4]] [[5,6], [7,8]]
 ||| [[6, 8], [10, 12]] : Vect 2 (Vect 2 Integer)
 ||| ```
-addMatrix : Num a => Vect n (Vect m a) -> Vect n (Vect m a) -> Vect n (Vect m a)
+addMatrix : Num a => Vect n (Vect m a) -> Vect n (Vect m a)
+         -> Vect n (Vect m a)
 addMatrix xs ys = zipWith (zipWith (+)) xs ys
 
 ||| Multiplies matrices.
@@ -22,5 +23,8 @@ addMatrix xs ys = zipWith (zipWith (+)) xs ys
 ||| [[29, 32, 35, 38], [65, 72, 79, 86], [101, 112, 123, 134]]
 ||| 	: Vect 3 (Vect 4 Integer)
 ||| ```
-multMatrix : Num a => Vect n (Vect m a) -> Vect m (Vect p a) -> Vect n (Vect p a)
-multMatrix xs ys = map (\row => map (sum . zipWith (*) row) (transposeMat ys)) xs
+multMatrix : Num a => Vect n (Vect m a) -> Vect m (Vect p a)
+          -> Vect n (Vect p a)
+multMatrix xs ys = map (\row => map (innerProduct row) (transposeMat ys)) xs
+ where
+	innerProduct row col = sum (zipWith (*) row col)

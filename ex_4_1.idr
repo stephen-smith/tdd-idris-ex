@@ -5,9 +5,8 @@ data Tree elem = Empty
                | Node (Tree elem) elem (Tree elem)
 
 insert : Ord a => a -> Tree a -> Tree a
-insert x Empty = Node Empty x Empty
-insert x orig@(Node left pivot right) =
-	case compare x pivot of
+insert x      Empty                   = Node Empty x Empty
+insert x orig@(Node left pivot right) = case compare x pivot of
 	 LT => Node (insert x left) pivot right
 	 EQ => orig
 	 GT => Node left pivot (insert x right)
@@ -20,7 +19,7 @@ insert x orig@(Node left pivot right) =
 |||      (Node (Node Empty 3 (Node Empty 4 Empty)) 5 Empty) : Tree Integer
 ||| ```
 listToTree : Ord a => List a -> Tree a
-listToTree [] = Empty
+listToTree []        = Empty
 listToTree (x :: xs) = insert x (listToTree xs)
 
 ||| _Flattens_ a tree into a list using _in-order_ traversal.
@@ -30,7 +29,8 @@ listToTree (x :: xs) = insert x (listToTree xs)
 ||| ```
 treeToList : Tree a -> List a
 treeToList Empty = []
-treeToList (Node left pivot right) = treeToList left ++ [pivot] ++ treeToList right
+treeToList (Node left pivot right) =
+	treeToList left ++ [pivot] ++ treeToList right
 
 ||| Integer Arithmetic Expressions
 data Expr =
@@ -49,10 +49,11 @@ data Expr =
 ||| 90 : Int
 ||| ```
 evaluate : Expr -> Int
-evaluate (Val value) = value
-evaluate (Add augend addend) = evaluate addend + evaluate augend
+evaluate (Val value)              = value
+evaluate (Add augend addend)      = evaluate addend + evaluate augend
 evaluate (Sub subtrahend minuend) = evaluate minuend - evaluate subtrahend
-evaluate (Mult multiplicand multiplier) = evaluate multiplier * evaluate multiplicand
+evaluate (Mult multiplicand multiplier) =
+	evaluate multiplier * evaluate multiplicand
 
 ||| Returns the larger of the two inputs, or `Nothing` if both inputs are
 ||| `Nothing`.
@@ -64,9 +65,9 @@ evaluate (Mult multiplicand multiplier) = evaluate multiplier * evaluate multipl
 ||| Just 4 : Maybe Integer
 ||| ```
 maxMaybe : Ord a => Maybe a -> Maybe a -> Maybe a
-maxMaybe Nothing y = y
-maxMaybe x@(Just _) Nothing = x
-maxMaybe (Just x) (Just y) = Just (max x y)
+maxMaybe   Nothing  y        = y
+maxMaybe x@(Just _) Nothing  = x
+maxMaybe   (Just x) (Just y) = Just (max x y)
 
 data Shape = Triangle Double Double
            | Rectangle Double Double
@@ -86,12 +87,13 @@ data Picture = Primitive Shape
 ||| Nothing : Maybe Double
 ||| ```
 biggestTriangle : Picture -> Maybe Double
-biggestTriangle (Primitive (Triangle x y)) = Just (x * y / 2)
+biggestTriangle (Primitive (Triangle x y))  = Just (x * y / 2)
 biggestTriangle (Primitive (Rectangle _ _)) = Nothing
-biggestTriangle (Primitive (Circle _)) = Nothing
-biggestTriangle (Combine x y) = maxMaybe (biggestTriangle x) (biggestTriangle y)
-biggestTriangle (Rotate _ p) = biggestTriangle p
-biggestTriangle (Translate _ _ p) = biggestTriangle p
+biggestTriangle (Primitive (Circle _))      = Nothing
+biggestTriangle (Rotate _ p)                = biggestTriangle p
+biggestTriangle (Translate _ _ p)           = biggestTriangle p
+biggestTriangle (Combine x y)               =
+	maxMaybe (biggestTriangle x) (biggestTriangle y)
 
 testPic1 : Picture
 testPic1 = Combine (Primitive (Triangle 2 3)) (Primitive (Triangle 2 4))
