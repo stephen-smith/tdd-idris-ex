@@ -3,6 +3,7 @@ import System
 
 %default total
 
+||| Sequencing without passing values.
 (>>) : Monad m => m () -> m a -> m a
 mv >> mx = mv >>= const mx
 
@@ -47,6 +48,8 @@ main = do
 	secs <- time
 	guess (fromInteger (secs `mod` 100 + 1)) 0
 
+||| Like `replWith`, but allows the step function to signal termination via
+||| `Nothing`.
 partial
 my_replWith : (initialState : a)
            -> (prompt : String)
@@ -61,6 +64,7 @@ my_replWith oldstate prompt f = do
 		putStrLn output
 		my_replWith newstate prompt f
 
+||| List `repl`, but terminating on `Nothing`.
 partial
 my_repl : (prompt : String) -> (String -> String) -> IO ()
 my_repl prompt f = my_replWith () prompt (\s, input => Just (f input, s))

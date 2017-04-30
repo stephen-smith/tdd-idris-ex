@@ -35,6 +35,7 @@ countFrom x = x :: countFrom (x + 1)
 ||| The faces of a coin.
 data Face = Heads | Tails
 
+||| Convert from a random integer to a coin face.
 getFace : Int -> Face
 getFace x = if x < 0 then Heads else Tails
 
@@ -60,6 +61,7 @@ randoms seed = let seed' = 1664525 * seed + 1013904223 in
 	(seed' `shiftR` 2) :: randoms seed'
 
 ||| Generate a sequence of square-root approximations.
+|||
 ||| ```idris-repl
 ||| > take 3 (square_root_approx 10 10)
 ||| [10.0, 5.5, 3.659090909090909] : List Double

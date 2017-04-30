@@ -26,6 +26,7 @@ equalSuffix xs ys = equalSuffix' xs ys (snocList xs) (snocList ys)
 	equalSuffix' (xs ++ [x]) (ys ++ [y]) (Snoc sx) (Snoc sy) =
 		if x == y then equalSuffix' xs ys sx sy ++ [x] else []
 
+||| Merge sort implemented via recursive vector split view.
 mergeSort : Ord a => Vect n a -> Vect n a
 mergeSort xs = mergeSort' xs (splitRec xs)
  where

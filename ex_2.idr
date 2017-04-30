@@ -1,11 +1,14 @@
 %default total
 
+||| Example constant.
 q1_1 : (String, String, String)
 q1_1 = ("A", "B", "C")
 
+||| Example constant.
 q1_2 : List String
 q1_2 = ["A", "B", "C"]
 
+||| Example constant.
 q1_3 : ((Char, String), Char)
 q1_3 = (('A', "B"), 'C')
 
@@ -64,6 +67,7 @@ palindrome n s = n < length s && reverse l == l
 
 ||| Return a pair of the number of words in the input and the number of
 ||| characters in the input.
+|||
 ||| ```idris-repl
 ||| > counts "Hello, Idris world!"
 ||| (3, 19) : (Nat, Nat)
@@ -72,6 +76,7 @@ counts : String -> (Nat, Nat)
 counts s = (length (words s), length s)
 
 ||| Returns the ten largest values in a list.
+|||
 ||| ```idris-repl
 ||| > top_ten [1..100]
 ||| [100, 99, 98, 97, 96, 95, 94, 93, 92, 91] : List Integer
@@ -81,6 +86,7 @@ top_ten l = take 10 (reverse (sort l))
 
 ||| Returns the number of strings in the list longer than the given number of
 ||| characters.
+|||
 ||| ```idris-repl
 ||| > over_length 3 ["One", "Two", "Three", "Four"]
 ||| 2 : Nat

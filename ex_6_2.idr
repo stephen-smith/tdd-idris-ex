@@ -2,9 +2,11 @@ import Data.Vect
 
 %default total
 
+||| Matrices represented by nested vectors.
 Matrix : Nat -> Nat -> Type
 Matrix n m = Vect n (Vect m Double)
 
+||| Example matrix.
 testMatrix : Matrix 2 3
 testMatrix = [[0, 0, 0], [0, 0, 0]]
 
@@ -46,6 +48,8 @@ toFormat (c :: chars) = case toFormat chars of
 	 Lit lit chars' => Lit (strCons c lit) chars'
 	 fmt => Lit (strCons c "") fmt
 
+||| Type-safe (toy) printf.
+|||
 ||| ```idris-repl
 ||| > :t printf "%c %f"
 ||| printf "%c %f" : Char -> Double -> String
@@ -55,9 +59,11 @@ toFormat (c :: chars) = case toFormat chars of
 printf : (fmt : String) -> PrintfType (toFormat (unpack fmt))
 printf fmt = printfFmt _ ""
 
+||| Like vectors, but based on nested (heterogenous) pairs.
 TupleVect : Nat -> Type -> Type
 TupleVect Z     _  = ()
 TupleVect (S k) ty = (ty, TupleVect k ty)
 
+||| Example `TupleVect`.
 test : TupleVect 4 Nat
 test = (1,2,3,4,())

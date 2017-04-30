@@ -29,10 +29,12 @@ data ConsoleIO : Type -> Type where
 	Do   : Command a -> (a -> Inf (ConsoleIO b)) -> ConsoleIO b
 
 namespace CommandDo
+	||| Do notation bind for commands.
 	(>>=) : Command a -> (a -> Command b) -> Command b
 	(>>=) = Bind
 
 namespace ConsoleDo
+	||| Do notation bind for console i/o programs
 	(>>=) : Command a -> (a -> Inf (ConsoleIO b)) -> ConsoleIO b
 	(>>=) = Do
 
@@ -49,11 +51,13 @@ readInput prompt = do
 	 else Pure (Answer (cast answer))
 
 mutual
+	||| Loop with updated state on correct answer.
 	correct : Stream Int -> (score : Nat) -> Nat -> ConsoleIO (Nat, Nat)
 	correct nums score attempts = do
 		PutStr "Correct!\n"
 		quiz nums (S score) attempts
 
+	||| Loop with updated state on incorrect answer.
 	wrong : Stream Int -> Int -> (score : Nat) -> Nat
 	     -> ConsoleIO (Nat, Nat)
 	wrong nums ans score attempts = do

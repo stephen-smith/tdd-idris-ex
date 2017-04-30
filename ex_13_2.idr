@@ -48,6 +48,7 @@ namespace StackDo
 	     -> StackIO height1
 	(>>=) = Do
 
+||| Lazy nats representing number of steps to execute.
 data Fuel = Dry | More (Lazy Fuel)
 
 ||| Infinite Fuel.

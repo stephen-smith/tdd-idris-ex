@@ -1,15 +1,18 @@
 %default total
 
+||| Alternative vector implementation.
 data Vect : Nat -> Type -> Type where
 	Nil  : Vect Z elem
 	(::) : elem -> Vect k elem -> Vect (S k) elem
 
+||| If heads don't match, the vectors don't match.
 headUnequal : DecEq a
            => {xs : Vect n a} -> {ys : Vect n a}
            -> (contra: (x = y) -> Void)
            -> ((x :: xs) = (y :: ys)) -> Void
 headUnequal contra Refl = contra Refl
 
+||| If tails don't match, the vectors don't match.
 tailUnequal : DecEq a
            => {xs : Vect n a} -> {ys : Vect n a}
            -> (contra : (xs = ys) -> Void)

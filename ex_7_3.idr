@@ -16,6 +16,7 @@ Functor Expr where
 	map func (Div x y) = Div (map func x) (map func y)
 	map func (Abs x)   = Abs (map func x)
 
+||| Alternative vector implementation.
 data Vect : Nat -> Type -> Type where
 	Nil : Vect Z ty
 	(::) : ty -> Vect k ty -> Vect (S k) ty

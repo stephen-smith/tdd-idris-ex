@@ -1,5 +1,6 @@
 %default total
 
+||| Simple 2D geometric shapes.
 data Shape = Triangle  Double Double
            | Rectangle Double Double
            | Circle    Double
@@ -24,11 +25,13 @@ Eq Shape where
 	(==) (Circle x)      (Circle y)      = x == y
 	(/=) x = not . (==) x
 
+||| 2D area of a shape.
 area : Shape -> Double
 area (Triangle w h)  = 0.5 * w * h
 area (Rectangle w h) =       w * h
 area (Circle r)      =  pi * r * r
 
+||| Comparison by area.
 Ord Shape where
 	compare x y = compare (area x) (area y)
 	(<) x y = compare x y == LT
@@ -38,6 +41,8 @@ Ord Shape where
 	max x y = if x < y then y else x
 	min x y = if y < x then y else x
 
+||| Example shapes.
+|||
 ||| ```idris-repl
 ||| > sort testShapes
 ||| [Rectangle 2.0 6.0,

@@ -79,7 +79,7 @@ steamIce = do
 	Freeze
 
 {-
-||| Invalid phase transition (bad type for one of the `Melt`s).
+||| Invalid phase transition (bad type for second `Melt`).
 overMelt : MatterCmd () Solid Gas
 overMelt = do
 	Melt

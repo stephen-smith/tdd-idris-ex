@@ -4,6 +4,7 @@
 data Tree elem = Empty
                | Node (Tree elem) elem (Tree elem)
 
+||| Add a new value into a binary search tree.
 insert : Ord a => a -> Tree a -> Tree a
 insert x      Empty                   = Node Empty x Empty
 insert x orig@(Node left pivot right) = case compare x pivot of
@@ -12,6 +13,7 @@ insert x orig@(Node left pivot right) = case compare x pivot of
 	 GT => Node left pivot (insert x right)
 
 ||| Inserts every element of a list into a binary search tree.
+|||
 ||| ```idris-repl
 ||| > listToTree [1,4,3,5,2]
 ||| Node (Node Empty 1 Empty)
@@ -23,6 +25,7 @@ listToTree []        = Empty
 listToTree (x :: xs) = insert x (listToTree xs)
 
 ||| _Flattens_ a tree into a list using _in-order_ traversal.
+|||
 ||| ```idris-repl
 ||| > treeToList (listToTree [4,1,8,7,2,3,9,5,6])
 ||| [1, 2, 3, 4, 5, 6, 7, 8, 9] : List Integer
@@ -44,6 +47,7 @@ data Expr =
 	Mult Expr Expr
 
 ||| Evaluates an integer arithmetic expression.
+|||
 ||| ```idris-repl
 ||| > evaluate (Mult (Val 10) (Add (Val 6) (Val 3)))
 ||| 90 : Int
@@ -69,10 +73,12 @@ maxMaybe   Nothing  y        = y
 maxMaybe x@(Just _) Nothing  = x
 maxMaybe   (Just x) (Just y) = Just (max x y)
 
+||| Example 2D geometric shape type.
 data Shape = Triangle Double Double
            | Rectangle Double Double
            | Circle Double
 
+||| Combinations and alteration of simple geometric shapes into a 2D picture.
 data Picture = Primitive Shape
              | Combine Picture Picture
              | Rotate Double Picture
@@ -80,6 +86,7 @@ data Picture = Primitive Shape
 
 ||| Returns the area of the biggest trinagle in a picture, or `Nothing` if
 ||| there are no triangles.
+|||
 ||| ```idris-repl
 ||| > biggestTriangle testPic1
 ||| Just 4.0 : Maybe Double
@@ -95,8 +102,10 @@ biggestTriangle (Translate _ _ p)           = biggestTriangle p
 biggestTriangle (Combine x y)               =
 	maxMaybe (biggestTriangle x) (biggestTriangle y)
 
+||| Example picutre.
 testPic1 : Picture
 testPic1 = Combine (Primitive (Triangle 2 3)) (Primitive (Triangle 2 4))
 
+||| Example picture.
 testPic2 : Picture
 testPic2 = Combine (Primitive (Rectangle 1 3)) (Primitive (Circle 4))

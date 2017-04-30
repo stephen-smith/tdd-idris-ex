@@ -4,10 +4,13 @@
 data InfIO : Type where
 	Do : IO a -> (a -> Inf InfIO) -> InfIO
 
+||| Do notation bind for infinite interactive processes
 (>>=) : IO a -> (a -> Inf InfIO) -> InfIO
 (>>=) = Do
 
 ||| New version of `repl` using `InfIO`.
+|||
+||| ```idris-repl
 ||| > :total totalREPL
 ||| Main.totalREPL is Total
 ||| > :exec run forever (totalREPL "\n: " toUpper)

@@ -9,7 +9,8 @@ printLonger_q1 = do
 	second <- getLine
 	putStrLn (show (max (length first) (length second)))
 
-||| Dame as `printLonger`.
+||| Same as `printLonger`.
+|||
 ||| ```idris-repl
 ||| > :exec printLonger
 ||| First string: short
@@ -24,5 +25,6 @@ printLonger =
 	>>= \_      => getLine
 	>>= \second => putStrLn (show (max (length first) (length second)))
 
+||| Proof of `do` and bind (>>=) equivalence.
 sameProgram : Main.printLonger = Main.printLonger_q1
 sameProgram = Refl

@@ -2,15 +2,19 @@ import Data.Vect
 
 %default total
 
+||| Store of `String`s.
 data DataStore : Type where
 	MkData : (size : Nat) -> (items : Vect size String) -> DataStore
 
+||| How many strings in the store?
 size : DataStore -> Nat
 size (MkData size' items') = size'
 
+||| The contents of the store.
 items : (store : DataStore) -> Vect (size store) String
 items (MkData size' items') = items'
 
+||| Store will new string added.
 addToStore : DataStore -> String -> DataStore
 addToStore (MkData size store) newitem = MkData _ (addToData store)
  where
@@ -18,6 +22,7 @@ addToStore (MkData size store) newitem = MkData _ (addToData store)
 	addToData [] = [newitem]
 	addToData (x :: xs) = x :: addToData xs
 
+||| Interactive commands, after validation.
 data Command =
 	Add String |
 	Get Integer |
@@ -27,7 +32,8 @@ data Command =
 	Search String |
 	Quit
 
-{- Added clauses to match "size" and "search". -}
+||| Parse tokenized input to a command. Added clauses to match "size" and
+||| "search".
 parseCommand : String -> String -> Maybe Command
 parseCommand "add"    item      = Just (Add item)
 parseCommand "size"   _         = Just Size
@@ -38,11 +44,14 @@ parseCommand "get"    val       = if all isDigit (unpack val)
 	else Nothing
 parseCommand _ _ = Nothing
 
+||| Parse raw input to a command.
 parse : (input : String) -> Maybe Command
 parse input =
 	case span (/= ' ') input of
 	 (cmd, args) => parseCommand cmd (ltrim args)
 
+||| Retrieve entry from store based on index.  `Nothing` if index is not
+||| valid.
 getEntry : (pos : Integer) -> (store : DataStore) -> Maybe (String, DataStore)
 getEntry pos store = Just (display, store)
  where
@@ -51,6 +60,7 @@ getEntry pos store = Just (display, store)
 		 Nothing    => "Out of range\n"
 		 (Just ndx) => index ndx (items store) ++ "\n"
 
+||| Find entries with a particular substring and format for display.
 doSearch : (substring : String) -> (store : DataStore) -> String
 doSearch substring store =
 	unlines (map displayIndexItem (filter isItemMatch indexed))
@@ -60,7 +70,8 @@ doSearch substring store =
 	isItemMatch (_, item) = substring `isInfixOf` item
 	displayIndexItem (ndx, item) = show ndx ++ ": " ++ item
 
-{- Added clauses for `Size` and `Search`. -}
+||| Process user input, or `Nothing` if input is invalid. Added clauses for
+||| `Size` and `Search`.
 processInput : DataStore -> String -> Maybe (String, DataStore)
 processInput store input =
 	case parse input of
@@ -74,6 +85,8 @@ processInput store input =
 		, addToStore store item
 		)
 
+||| Example program allowing interactivity with the data store.
+|||
 ||| ```idris-repl
 ||| > :exec
 ||| Command: add Shearer

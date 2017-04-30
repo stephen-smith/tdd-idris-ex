@@ -1,5 +1,6 @@
 %default total
 
+||| Arithmetic expressions.
 public export
 data Expr num = Val num
               | Add (Expr num) (Expr num)
@@ -13,6 +14,8 @@ Num lit => Num (Expr lit) where
   (*) x y = Mul x y
   fromInteger = Val . fromInteger
 
+||| Fully parenthesized display.
+|||
 ||| ```idris-repl
 ||| > show (the (Expr _) (6 + 3 * 12))
 ||| "(6 + (3 * 12))" : String
@@ -27,6 +30,7 @@ Show lit => Show (Expr lit) where
 	show (Div x y) = "(" ++ show x ++ " / " ++ show y ++ ")"
 	show (Abs x)   = "|" ++ show x ++ "|"
 
+||| Evaluate using `Neg`/`Integral` operations.
 eval : (Neg lit, Integral lit) => Expr lit -> lit
 eval (Val lit) = lit
 eval (Add x y) = eval x + eval y
@@ -35,6 +39,8 @@ eval (Mul x y) = eval x * eval y
 eval (Div x y) = eval x `div` eval y
 eval (Abs x)   = abs (eval x)
 
+||| Eqaulity based on evaluation.
+|||
 ||| ```idris-repl
 ||| > the (Expr _) (2 + 4) == 3 + 3
 ||| True : Bool

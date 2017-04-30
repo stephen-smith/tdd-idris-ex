@@ -3,17 +3,17 @@ import Data.Vect
 
 %default total
 
-{- Extended with Electricity constructor -}
+||| How a vehicle produces the power to move.  Extended with Electricity
+||| constructor.
 data PowerSource = Petrol | Pedal | Electricity
 
-{- Fields in a car vary based on power source, so give them their own type. -}
+||| Type for fields in a car that vary based on power source.
 data CarFields : PowerSource -> Type where
 	PetrolCF : (fuel : Nat)-> CarFields Petrol
 	ElectricCF : (charge : Nat) -> CarFields Electricity
 
-{- Extended to include unicycles, motorcycles, and trams.  Modified for
- - electric cars.
- -}
+||| Some vehicles as a type.  Extended to include unicycles, motorcycles, and
+||| trams.  Modified for electric cars.
 data Vehicle : PowerSource -> Type where
 	Bicycle : Vehicle Pedal
 	Car : CarFields power -> Vehicle power
@@ -22,7 +22,8 @@ data Vehicle : PowerSource -> Type where
 	Motorcycle : (fuel : Nat) -> Vehicle Petrol
 	Tram : Vehicle Electricity
 
-{- Extended to include unicycles, motorcycles, and trams. -}
+||| Number of wheels on a vehicle. Extended to include unicycles, motorcycles,
+||| and trams.
 wheels : Vehicle power -> Nat
 wheels Bicycle = 2
 wheels (Car _) = 4
@@ -31,12 +32,14 @@ wheels Unicycle = 1
 wheels (Motorcycle _) = 2
 wheels Tram = 4
 
-{- Extended to include motorcycles.  Modified for electric cars. -}
+||| Refueling.  Extended to include motorcycles.  Modified for electric cars.
 refuel : Vehicle Petrol -> Vehicle Petrol
 refuel (Car _) = Car (PetrolCF 100)
 refuel (Bus _) = Bus 200
 refuel (Motorcycle _) = Motorcycle 50
 
+||| Implementation of `take` for vectors.
+|||
 ||| ```idris-repl
 ||| > vectTake 3 [1,2,3,4,5,6,7]
 ||| [1, 2, 3] : Vect 3 Integer
