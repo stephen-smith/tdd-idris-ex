@@ -1,5 +1,7 @@
 import Data.Vect
 
+%default total
+
 ||| ```idris-repl
 ||| > transposeMat [[1,2], [3,4], [5,6]]
 ||| [[1, 3, 5], [2, 4, 6]] : Vect 2 (Vect 3 Integer)

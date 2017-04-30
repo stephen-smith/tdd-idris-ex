@@ -81,9 +81,9 @@ data Picture = Primitive Shape
 ||| Returns the area of the biggest trinagle in a picture, or `Nothing` if
 ||| there are no triangles.
 ||| ```idris-repl
-||| > biggestTrinagle testPic1
+||| > biggestTriangle testPic1
 ||| Just 4.0 : Maybe Double
-||| > biggestTrinagle testPic2
+||| > biggestTriangle testPic2
 ||| Nothing : Maybe Double
 ||| ```
 biggestTriangle : Picture -> Maybe Double

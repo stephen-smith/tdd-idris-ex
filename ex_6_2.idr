@@ -1,5 +1,7 @@
 import Data.Vect
 
+%default total
+
 Matrix : Nat -> Nat -> Type
 Matrix n m = Vect n (Vect m Double)
 

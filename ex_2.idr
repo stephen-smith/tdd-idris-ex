@@ -1,3 +1,5 @@
+%default total
+
 q1_1 : (String, String, String)
 q1_1 = ("A", "B", "C")
 
@@ -88,6 +90,7 @@ over_length _ [] = 0
 over_length k (x :: xs) = (if k < length x then S else id) (over_length k xs)
 
 ||| Variant of `repl` that shows the result and adds a newline.
+partial
 showRepl : Show r => String -> (String -> r) -> IO ()
 showRepl prompt function = repl prompt ((++ "\n") . show . function)
 
@@ -105,5 +108,6 @@ paliCount s = (palindrome 0 s, counts s)
 ||| (False, 3, 14)
 ||| Enter a string:
 ||| ```
+partial
 main : IO ()
 main = showRepl "Enter a string: " paliCount

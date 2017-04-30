@@ -1,5 +1,7 @@
 import Control.Monad.State
 
+%default total
+
 ||| Updates a state by applying a function to the current state.
 |||
 ||| ```idris-repl

@@ -1,5 +1,7 @@
 import Data.Vect
 
+%default total
+
 data DataStore : Type where
 	MkData : (size : Nat) -> (items : Vect size String) -> DataStore
 

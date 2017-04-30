@@ -1,3 +1,5 @@
+%default total
+
 data Elem : List e -> e -> Type where
 	Here : Elem (x :: _) x
 	There : Elem xs x -> Elem (_ :: xs) x
